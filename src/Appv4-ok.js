@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
+
+// components
 import Title from './components/title';
-import loading from './components/loading';
+import Loading from './components/loading';
 import GameStart from './components/start';
 import RadioButton from './components/radioButtonv2';
-import flag from './components/flag';
+import Flag from './components/flag';
 import Pass from './components/pass';
 import Proceed from './components/proceed';
 import CheckAnswer from './components/checkAnswer';
-import revealAnswer from './components/answer';
+import RevealAnswer from './components/answer';
+
+// methods
+import start from './methods/start';
 
 // for my future me, future additions
 // 1. 10 lives
-// 2. point system 
+// 2. point system
 //        - specific will give specific class (such as Diplomat for 50 - 60 points)
 //        - display message that "we hope user did not googled the answers"
 // 3. save correct answers
@@ -34,14 +39,9 @@ class GuessTheCountry extends Component {
       correct: false,
       userAnswer: ""
     }
-    this.setChoices = this.setChoices.bind(this)
-    this.revealAnswer = this.revealAnswer.bind(this)
-    this.nextQuestion = this.nextQuestion.bind(this)
-    this.chosenAnswer = this.chosenAnswer.bind(this)
-    this.checkAnswer = this.checkAnswer.bind(this)
   }
 
-  // API CALL 
+  // API CALL
   componentDidMount() {
     fetch("https://restcountries.eu/rest/v2/all")
     .then(data => {return data.json()})
@@ -49,62 +49,46 @@ class GuessTheCountry extends Component {
   }
 
   // STARTS THE GAME
-  setChoices() {
-    if(this.state.countries.length > 0) {
-      // copy of the state
-      const stateCopy = Object.assign({}, this.state)
-
-      // generate choices and store it to an arrayCopy
-      const choicesCopy = stateCopy.choices.slice()
-          for(let i = 1; i <= 5; i++) {
-            const randomCountryInd = Math.floor(Math.random() * (stateCopy.countries.length))
-            choicesCopy.push(stateCopy.countries[randomCountryInd])
-          }
-      
-      // generate the answerArray from the choicesCopy
-      const answer = []
-          const answerInd = Math.floor(Math.random() * (4 - 0 + 1)) + 0
-          answer.push(choicesCopy[answerInd].name, choicesCopy[answerInd].flag)
-      
-      // change the state
-      this.setState({answer:answer, choices:choicesCopy, start: true, correct:false})
-    }
+  setChoices = () => {
+    start(this)
   }
 
   // PASS: REVEAL ANSWER
-  revealAnswer() {
+  revealAnswer = () => {
     this.setState({passed: true, choices: []})
   }
 
   // PASS: PROCEED TO NEXT QUESTION
-  nextQuestion() {
+  nextQuestion = () => {
     this.setState({passed: false, answered: false, userAnswer: "", choices: []}, () => {
       this.setChoices()
     })
   }
 
   // SET CHOSEN ANSWER
-  chosenAnswer(e) {
+  chosenAnswer = e => {
     this.setState({userAnswer: e.target.value})
   }
 
   // EVALUATE ANSWER
-  checkAnswer() {
+  checkAnswer = () => {
     const {userAnswer, answer} = this.state
-    if(userAnswer === answer[0]) {
+
+    if (userAnswer === answer[0]) {
       this.setState({answered: true, correct:true})
     } else {
       this.setState({answered: true, correct:false})
     }
+
   }
 
   render() {
-    const {countries, choices, start, answer, passed, answered, correct} = this.state;
-    const answerImg = answer[1];
-    const answerName = answer[0];
-    const revealTheAnswer = revealAnswer({answerName, passed, answered, correct})
-    const loadMsg = loading({countries, start, passed, correct, answered});
-    const flagImg = flag(answerImg)
+    console.log("Right after render(): ", this.state.answer)
+    const { countries, choices, start, answer, passed, answered, correct } = this.state;
+    const [ answerName, answerImg ] = answer
+    const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct })
+    const loadMsg = Loading({ countries, start, passed, correct, answered });
+    const flagImg = Flag( answerImg )
     const radioButtons = choices.map((country, i) => {
       return <RadioButton
                 country={country}
@@ -118,33 +102,33 @@ class GuessTheCountry extends Component {
 
     return (
       <div className="gameContainer">
-        
+
         <Title />
 
         <div className="gameNavigation">
 
-        {flagImg}
+        {(start) ? flagImg : null }
 
         <div className="gameButtonsContainer">
-          <GameStart 
+          <GameStart
             setChoices={this.setChoices}
             start={start}
           />
 
-          <Pass 
+          <Pass
             revealAnswer={this.revealAnswer}
             start={start}
             passed={passed}
             answered={answered}
           />
 
-          <Proceed 
+          <Proceed
             nextQuestion={this.nextQuestion}
             passed={passed}
             answered={answered}
           />
 
-          <CheckAnswer 
+          <CheckAnswer
             checkAnswer={this.checkAnswer}
             start={start}
             passed={passed}
@@ -164,8 +148,8 @@ class GuessTheCountry extends Component {
         <div className="choicesOuterContainer">
           <div className="choicesInnerContainer">
 
-            {radioButtons}    
-            
+            {radioButtons}
+
           </div>
         </div>
 

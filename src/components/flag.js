@@ -2,8 +2,8 @@ import React from 'react'
 
 const flag = (answerImg) => {
     return (
-        <div class="imgContainer">
-            <img 
+        <div className="imgContainer">
+            <img
                 src={answerImg}
                 alt="Country Flag"
                 width="400px"
