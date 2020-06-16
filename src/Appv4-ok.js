@@ -57,7 +57,7 @@ class GuessTheCountry extends Component {
   componentDidMount() {
     fetch("https://restcountries.eu/rest/v2/all")
     .then(data => {return data.json()})
-    .then(data => {this.setState({countries: data})}) // reassign a global variable
+    .then(data => {this.setState({countries: data})})
   }
 
   // STARTS THE GAME
@@ -113,7 +113,7 @@ class GuessTheCountry extends Component {
   }
 
   render() {
-    console.log("AFTER CALLING RENDER(): ", this.state.answer)
+    // console.log("AFTER CALLING RENDER(): ", this.state)
     const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
     const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct })
