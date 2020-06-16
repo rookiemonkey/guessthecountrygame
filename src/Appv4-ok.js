@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Title from './components/title';
 import Loading from './components/loading';
 import GameStart from './components/start';
+import GameOver from './components/gameover';
 import RadioButton from './components/radioButtonv2';
 import Flag from './components/flag';
 import Pass from './components/pass';
@@ -17,6 +18,7 @@ import start from './methods/start';
 
 // for my future me, future additions
 // 1. DONE  === 10 lives
+    // DONE === when reaches 0, game over screen
 // 2. point system
 //        - specific will give specific class (such as Diplomat for 50 - 60 points)
 //        - display message that "we hope user did not googled the answers"
@@ -25,7 +27,11 @@ import start from './methods/start';
 // 5. quit button
 // 6. quit button ends the game and shows correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
-// 8. timer for each question
+// 8. DONE ===avoid duplicate by stroting just the answer.countryname (regardless if right/wrong) to avoidDup array
+    // -- modify setChoices to loop into avoidDupArray
+// 9. timer for each question
+    // -- score will be depending on the duration
+    // -- when time reaches 0 its already incorrect (call pass instead)
 
 class GuessTheCountry extends Component {
   constructor(props) {
@@ -41,8 +47,9 @@ class GuessTheCountry extends Component {
       userAnswer: "",
       lives: 10,
       score: 0,
+      avoidDuplicate: [],
       incorrectAnswer: [],
-      correctAnswer: []
+      correctAnswer: [],
     }
   }
 
@@ -81,24 +88,32 @@ class GuessTheCountry extends Component {
   // EVALUATE ANSWER
   checkAnswer = () => {
     const stateCopy = Object.assign({}, this.state)
-    const {userAnswer, answer, lives, score, incorrectAnswer, correctAnswer} = stateCopy
+    const {userAnswer, answer, lives, score, incorrectAnswer, correctAnswer, avoidDuplicate} = stateCopy
 
     if (userAnswer === answer[0]) {
       const incrementScore = score + 1
+      const duplicates = avoidDuplicate.concat(answer[0])
       const correctAnswers = correctAnswer.concat({Country: answer[0], Flag: answer[1]})
-      console.error(correctAnswers)
-      this.setState({answered: true, correct:true, score: incrementScore, correctAnswer: correctAnswers})
+      this.setState({
+        answered: true, correct:true,
+        score: incrementScore, correctAnswer: correctAnswers,
+        avoidDuplicate: duplicates
+      });
     } else {
       const decrementLives = lives - 1
+      const duplicates = avoidDuplicate.concat(answer[0])
       const wrongAnswers = incorrectAnswer.concat({Country: answer[0], Flag: answer[1]})
-      this.setState({answered: true, correct:false, lives: decrementLives, incorrectAnswer: wrongAnswers})
+      this.setState({
+        answered: true, correct:false,
+        lives: decrementLives, incorrectAnswer: wrongAnswers,
+        avoidDuplicate: duplicates
+      });
     }
 
   }
 
   render() {
     console.log("AFTER CALLING RENDER(): ", this.state.answer)
-    console.log("CORRECT", this.state.correctAnswer, 'INCORRECT', this.state.incorrectAnswer)
     const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
     const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct })
@@ -117,7 +132,9 @@ class GuessTheCountry extends Component {
                 />
     });
 
-    return (
+    if ( lives !== 0 ) {
+      return (
+
       <div className="gameContainer">
 
         <Title />
@@ -125,6 +142,8 @@ class GuessTheCountry extends Component {
         {( start ) ? <h6>Score: { score }</h6> : null }
 
         {( start ) ? <h6>Lives: { hearts } </h6> : null }
+
+        {( lives === 1 ) ? <h6><strong>This is your last chance, if you got it incorrectly. Game is over</strong></h6> : null}
 
         <div className="gameNavigation">
 
@@ -176,7 +195,14 @@ class GuessTheCountry extends Component {
 
         </div>
       </div>
-    )
+
+      )
+
+    } else {
+
+      return (<GameOver />)
+
+    }
   }
 }
 
