@@ -10,17 +10,18 @@ import Pass from './components/pass';
 import Proceed from './components/proceed';
 import CheckAnswer from './components/checkAnswer';
 import RevealAnswer from './components/answer';
+import Heart from './components/heart';
 
 // methods
 import start from './methods/start';
 
 // for my future me, future additions
-// 1. 10 lives
+// 1. DONE  === 10 lives
 // 2. point system
 //        - specific will give specific class (such as Diplomat for 50 - 60 points)
 //        - display message that "we hope user did not googled the answers"
-// 3. save correct answers
-// 4. save incorrect answers
+// 3. DONE  === save correct answers // array of obj (name/img)
+// 4. DONE  === save incorrect answers // array of obj (name/img)
 // 5. quit button
 // 6. quit button ends the game and shows correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
@@ -37,7 +38,11 @@ class GuessTheCountry extends Component {
       passed: false,
       answered: false,
       correct: false,
-      userAnswer: ""
+      userAnswer: "",
+      lives: 10,
+      score: 0,
+      incorrectAnswer: [],
+      correctAnswer: []
     }
   }
 
@@ -55,7 +60,10 @@ class GuessTheCountry extends Component {
 
   // PASS: REVEAL ANSWER
   revealAnswer = () => {
-    this.setState({passed: true, choices: []})
+    const stateCopy = Object.assign({}, this.state)
+    const { lives } = stateCopy
+    const decrementLives = lives - 1
+    this.setState({passed: true, choices: [], lives: decrementLives})
   }
 
   // PASS: PROCEED TO NEXT QUESTION
@@ -72,25 +80,34 @@ class GuessTheCountry extends Component {
 
   // EVALUATE ANSWER
   checkAnswer = () => {
-    const {userAnswer, answer} = this.state
+    const stateCopy = Object.assign({}, this.state)
+    const {userAnswer, answer, lives, score, incorrectAnswer, correctAnswer} = stateCopy
 
     if (userAnswer === answer[0]) {
-      this.setState({answered: true, correct:true})
+      const incrementScore = score + 1
+      const correctAnswers = correctAnswer.concat({Country: answer[0], Flag: answer[1]})
+      console.error(correctAnswers)
+      this.setState({answered: true, correct:true, score: incrementScore, correctAnswer: correctAnswers})
     } else {
-      this.setState({answered: true, correct:false})
+      const decrementLives = lives - 1
+      const wrongAnswers = incorrectAnswer.concat({Country: answer[0], Flag: answer[1]})
+      this.setState({answered: true, correct:false, lives: decrementLives, incorrectAnswer: wrongAnswers})
     }
 
   }
 
   render() {
-    console.log("Right after render(): ", this.state.answer)
-    const { countries, choices, start, answer, passed, answered, correct } = this.state;
+    console.log("AFTER CALLING RENDER(): ", this.state.answer)
+    console.log("CORRECT", this.state.correctAnswer, 'INCORRECT', this.state.incorrectAnswer)
+    const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
     const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct })
     const loadMsg = Loading({ countries, start, passed, correct, answered });
     const flagImg = Flag( answerImg )
+    const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
     const radioButtons = choices.map((country, i) => {
       return <RadioButton
+                key={i}
                 country={country}
                 start={start}
                 i={i}
@@ -105,9 +122,13 @@ class GuessTheCountry extends Component {
 
         <Title />
 
+        {( start ) ? <h6>Score: { score }</h6> : null }
+
+        {( start ) ? <h6>Lives: { hearts } </h6> : null }
+
         <div className="gameNavigation">
 
-        {(start) ? flagImg : null }
+        {( start ) ? flagImg : null }
 
         <div className="gameButtonsContainer">
           <GameStart

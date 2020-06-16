@@ -17,7 +17,7 @@ class CheckAnswer extends Component {
                     type="button"
                 >CHECK</button>
             )
-            
+
         } else {
 
             return null
