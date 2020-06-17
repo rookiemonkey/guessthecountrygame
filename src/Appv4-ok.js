@@ -24,14 +24,14 @@ import Choices from './containers/choices';
 // 2. point system
 //        - specific will give specific class (such as Diplomat for 50 - 60 points)
 //        - display message that "we hope user did not googled the answers"
-// 5. DONE === quit button
 // 6. needs styling - quit button ends the game and shows GAMEOVER and the correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
-// 9. incorrectAnswer might give you duplicate countries as well, use map instead
 // 9. timer for each question
     // -- score will be depending on the duration
     // -- when time reaches 0 its already incorrect (call pass instead)
-// 10. display other information beign fetched from the server
+// 10. upon showing the answer
+    // -- display other informations fetched from the server
+    // -- display it on a map (use a library)
 
 class GuessTheCountry extends Component {
   constructor(props) {
