@@ -8,6 +8,9 @@ import Heart from './components/heart';
 
 // methods
 import start from './methods/start';
+import reveal from './methods/revealAnswer';
+import pass from './methods/pass';
+import evaluate from './methods/evaluate';
 
 // containers
 import Status from './containers/stats';
@@ -69,17 +72,12 @@ class GuessTheCountry extends Component {
 
   // PASS: REVEAL ANSWER
   revealAnswer = () => {
-    const stateCopy = Object.assign({}, this.state)
-    const { lives } = stateCopy
-    const decrementLives = lives - 1
-    this.setState({passed: true, choices: [], lives: decrementLives})
+    reveal(this)
   }
 
   // PASS: PROCEED TO NEXT QUESTION
   nextQuestion = () => {
-    this.setState({passed: false, answered: false, userAnswer: "", choices: []}, () => {
-      this.setChoices()
-    })
+    pass(this)
   }
 
   // SET CHOSEN ANSWER
@@ -89,32 +87,10 @@ class GuessTheCountry extends Component {
 
   // EVALUATE ANSWER
   checkAnswer = () => {
-    const stateCopy = Object.assign({}, this.state)
-    const {userAnswer, answer, lives, score, incorrectAnswer, correctAnswer, avoidDuplicate } = stateCopy
-    const [ country, flag ] = answer
-
-    if (userAnswer === country) {
-      const incrementScore = score + 1
-      const duplicates = avoidDuplicate.concat(country)
-      const correctAnswers = correctAnswer.concat({Country: country, Flag: flag})
-      this.setState({
-        answered: true, correct:true,
-        score: incrementScore, correctAnswer: correctAnswers,
-        avoidDuplicate: duplicates
-      });
-    } else {
-      const decrementLives = lives - 1
-      const wrongAnswers = incorrectAnswer.concat({Country: country, Flag: flag})
-      this.setState({
-        answered: true, correct:false,
-        lives: decrementLives, incorrectAnswer: wrongAnswers
-      });
-    }
-
+    evaluate(this)
   }
 
   render() {
-    console.log("AFTER CALLING RENDER(): ", this.state)
     const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
     const flagImg = Flag( answerImg )
