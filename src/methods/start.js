@@ -21,7 +21,15 @@ const start = (obj) => {
       // generate the answerArray from the choicesCopy
       const answer = []
           const answerInd = Math.floor(Math.random() * (4 - 0 + 1)) + 0
-          answer.push(choicesCopy[answerInd].name, choicesCopy[answerInd].flag)
+          answer.push(
+            choicesCopy[answerInd].name,
+            choicesCopy[answerInd].flag,
+            choicesCopy[answerInd].capital,
+            choicesCopy[answerInd].region,
+            choicesCopy[answerInd].subregion,
+            choicesCopy[answerInd].population,
+            choicesCopy[answerInd].latlng
+            )
 
       // change the state
       obj.setState({

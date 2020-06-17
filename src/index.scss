@@ -158,7 +158,8 @@ div.gameNavigation {
   // answer container
   div.gameAnswerContainer {
     display: flex;
-    justify-content: center;
+    flex-flow: column;
+    align-items: center;
 
     span strong {
       font-weight: 800;

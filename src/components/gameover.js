@@ -38,7 +38,6 @@ class GameOver extends Component {
                         : null
                     }
 
-
                 </div>
 
             </div>

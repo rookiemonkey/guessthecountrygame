@@ -29,7 +29,7 @@ import Choices from './containers/choices';
     // -- score will be depending on the duration
     // -- when time reaches 0 its already incorrect (call pass instead)
 // 10. upon showing the answer
-    // -- display other informations fetched from the server
+    // -- needs styling display other informations fetched from the server
     // -- display it on a map (use a library)
 
 class GuessTheCountry extends Component {
@@ -125,6 +125,7 @@ class GuessTheCountry extends Component {
             answerName={answerName} passed={passed}
             answered={answered} correct={correct}
             start={start} countries={countries}
+            answer={answer}
           />
 
           <Choices
