@@ -27,8 +27,8 @@ import start from './methods/start';
 // 5. quit button
 // 6. quit button ends the game and shows correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
-// 8. DONE ===avoid duplicate by stroting just the answer.countryname (regardless if right/wrong) to avoidDup array
-    // -- modify setChoices to loop into avoidDupArray
+// 8. DONE === avoid duplicate by stroting just the answer.countryname (regardless if right/wrong) to avoidDup array
+    // DONE === modify setChoices to loop into avoidDupArray
 // 9. timer for each question
     // -- score will be depending on the duration
     // -- when time reaches 0 its already incorrect (call pass instead)
@@ -88,12 +88,13 @@ class GuessTheCountry extends Component {
   // EVALUATE ANSWER
   checkAnswer = () => {
     const stateCopy = Object.assign({}, this.state)
-    const {userAnswer, answer, lives, score, incorrectAnswer, correctAnswer, avoidDuplicate} = stateCopy
+    const {userAnswer, answer, lives, score, incorrectAnswer, correctAnswer, avoidDuplicate } = stateCopy
+    const [ country, flag ] = answer
 
-    if (userAnswer === answer[0]) {
+    if (userAnswer === country) {
       const incrementScore = score + 1
-      const duplicates = avoidDuplicate.concat(answer[0])
-      const correctAnswers = correctAnswer.concat({Country: answer[0], Flag: answer[1]})
+      const duplicates = avoidDuplicate.concat(country)
+      const correctAnswers = correctAnswer.concat({Country: country, Flag: flag})
       this.setState({
         answered: true, correct:true,
         score: incrementScore, correctAnswer: correctAnswers,
@@ -101,19 +102,17 @@ class GuessTheCountry extends Component {
       });
     } else {
       const decrementLives = lives - 1
-      const duplicates = avoidDuplicate.concat(answer[0])
-      const wrongAnswers = incorrectAnswer.concat({Country: answer[0], Flag: answer[1]})
+      const wrongAnswers = incorrectAnswer.concat({Country: country, Flag: flag})
       this.setState({
         answered: true, correct:false,
-        lives: decrementLives, incorrectAnswer: wrongAnswers,
-        avoidDuplicate: duplicates
+        lives: decrementLives, incorrectAnswer: wrongAnswers
       });
     }
 
   }
 
   render() {
-    // console.log("AFTER CALLING RENDER(): ", this.state)
+    console.log("AFTER CALLING RENDER(): ", this.state)
     const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
     const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct })
