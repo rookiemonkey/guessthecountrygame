@@ -4,7 +4,7 @@ const start = (obj) => {
 
       // generate a copy of the state
       const stateCopy = Object.assign({}, obj.state)
-      const { choices, countries, correctAnswer, avoidDuplicate } = stateCopy
+      const { choices, countries, avoidDuplicate } = stateCopy
 
       // generate choices and store it to copyr of choices array
       const choicesCopy = choices.slice()

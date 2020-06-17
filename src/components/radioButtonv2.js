@@ -6,7 +6,9 @@ class RadioButton extends Component {
     static defaultProps = {
         chosenAnswer(){}
     }
+
     render() {
+
         const {country, start, i, chosenAnswer, passed, answered} = this.props;
 
         if (start && passed || start && answered) {
@@ -16,11 +18,11 @@ class RadioButton extends Component {
         } else if (start && passed === false) {
             return (
                 <div key={i}>
-        
-                    <label 
+
+                    <label
                         htmlFor={country.name}
                     >
-                        
+
                     <input
                         type="radio"
                         id={country.name}
@@ -28,7 +30,7 @@ class RadioButton extends Component {
                         name="answer"
                         onChange={chosenAnswer}
                     ></input>  {country.name}</label>
-        
+
                 </div>
         )
         }

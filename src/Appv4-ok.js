@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 
 // components
 import Title from './components/title';
-import Loading from './components/loading';
-import GameStart from './components/start';
 import GameOver from './components/gameover';
-import RadioButton from './components/radioButtonv2';
 import Flag from './components/flag';
-import Pass from './components/pass';
-import Proceed from './components/proceed';
-import CheckAnswer from './components/checkAnswer';
-import RevealAnswer from './components/answer';
 import Heart from './components/heart';
 
 // methods
 import start from './methods/start';
+
+// containers
+import Status from './containers/stats';
+import Buttons from './containers/buttons';
+import Answer from './containers/answer';
+import Choices from './containers/choices';
+
+
 
 // for my future me, future additions
 // 1. DONE  === 10 lives
@@ -29,6 +30,7 @@ import start from './methods/start';
 // 7. use howler.js to add music upon hitting start
 // 8. DONE === avoid duplicate by stroting just the answer.countryname (regardless if right/wrong) to avoidDup array
     // DONE === modify setChoices to loop into avoidDupArray
+// 9. incorrectAnswer might give you duplicate countries as well, use map instead
 // 9. timer for each question
     // -- score will be depending on the duration
     // -- when time reaches 0 its already incorrect (call pass instead)
@@ -115,21 +117,9 @@ class GuessTheCountry extends Component {
     console.log("AFTER CALLING RENDER(): ", this.state)
     const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
-    const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct })
-    const loadMsg = Loading({ countries, start, passed, correct, answered });
     const flagImg = Flag( answerImg )
     const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
-    const radioButtons = choices.map((country, i) => {
-      return <RadioButton
-                key={i}
-                country={country}
-                start={start}
-                i={i}
-                chosenAnswer={this.chosenAnswer}
-                passed={passed}
-                answered={answered}
-                />
-    });
+
 
     if ( lives !== 0 ) {
       return (
@@ -138,61 +128,33 @@ class GuessTheCountry extends Component {
 
         <Title />
 
-        {( start ) ? <h6>Score: { score }</h6> : null }
-
-        {( start ) ? <h6>Lives: { hearts } </h6> : null }
-
-        {( lives === 1 ) ? <h6><strong>This is your last chance, if you got it incorrectly. Game is over</strong></h6> : null}
+        <Status start={start} score={score} hearts={hearts} lives={lives} />
 
         <div className="gameNavigation">
 
-        {( start ) ? flagImg : null }
+          {( start ) ? flagImg : null }
 
-        <div className="gameButtonsContainer">
-          <GameStart
-            setChoices={this.setChoices}
-            start={start}
-          />
-
-          <Pass
-            revealAnswer={this.revealAnswer}
-            start={start}
-            passed={passed}
-            answered={answered}
-          />
-
-          <Proceed
-            nextQuestion={this.nextQuestion}
-            passed={passed}
-            answered={answered}
-          />
-
-          <CheckAnswer
+          <Buttons
+            start={start} passed={passed}
+            answered={answered} setChoices={this.setChoices}
+            revealAnswer={this.revealAnswer} nextQuestion={this.nextQuestion}
             checkAnswer={this.checkAnswer}
-            start={start}
-            passed={passed}
-            answered={answered}
+          />
+
+          <Answer
+            answerName={answerName} passed={passed}
+            answered={answered} correct={correct}
+            start={start} countries={countries}
+          />
+
+          <Choices
+            choices={choices} start={start}
+            answered={answered} passed={passed}
+            chosenAnswer={this.chosenAnswer}
           />
 
         </div>
 
-        <div className='gameAnswerContainer'>
-
-          {revealTheAnswer}
-
-          {loadMsg}
-
-        </div>
-
-        <div className="choicesOuterContainer">
-          <div className="choicesInnerContainer">
-
-            {radioButtons}
-
-          </div>
-        </div>
-
-        </div>
       </div>
 
       )
