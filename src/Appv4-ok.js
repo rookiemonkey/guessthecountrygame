@@ -28,8 +28,8 @@ import Choices from './containers/choices';
 //        - display message that "we hope user did not googled the answers"
 // 3. DONE  === save correct answers // array of obj (name/img)
 // 4. DONE  === save incorrect answers // array of obj (name/img)
-// 5. quit button
-// 6. quit button ends the game and shows correct/incorrect answers
+// 5. DONE === quit button
+// 6. quit button ends the game and shows GAMEOVER and the correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
 // 8. DONE === avoid duplicate by stroting just the answer.countryname (regardless if right/wrong) to avoidDup array
     // DONE === modify setChoices to loop into avoidDupArray
@@ -46,6 +46,7 @@ class GuessTheCountry extends Component {
       choices: [],
       answer: [],
       start: false,
+      gameOver: false,
       passed: false,
       answered: false,
       correct: false,
@@ -90,14 +91,22 @@ class GuessTheCountry extends Component {
     evaluate(this)
   }
 
+  // QUIT
+  endGame = () => {
+    this.setState({gameOver: true})
+  }
+
   render() {
-    const { countries, choices, start, answer, passed, answered, correct, lives, score } = this.state;
+    const {
+      countries, choices, start,
+      gameOver, answer, passed,
+      answered, correct, lives, score } = this.state;
     const [ answerName, answerImg ] = answer
     const flagImg = Flag( answerImg )
     const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
 
-
-    if ( lives !== 0 ) {
+    if ( gameOver === false ) {
+      if ( lives !== 0  ) {
       return (
 
       <div className="gameContainer">
@@ -114,7 +123,7 @@ class GuessTheCountry extends Component {
             start={start} passed={passed}
             answered={answered} setChoices={this.setChoices}
             revealAnswer={this.revealAnswer} nextQuestion={this.nextQuestion}
-            checkAnswer={this.checkAnswer}
+            checkAnswer={this.checkAnswer} endGame={this.endGame}
           />
 
           <Answer
@@ -135,8 +144,16 @@ class GuessTheCountry extends Component {
 
       )
 
+      } else {
+
+        // when score reaches 0
+        return (<GameOver />)
+
+      }
+
     } else {
 
+      // when user quits
       return (<GameOver />)
 
     }
