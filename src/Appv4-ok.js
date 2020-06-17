@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Howl } from 'howler';
 
 // components
 import Title from './components/title';
@@ -18,7 +19,14 @@ import Buttons from './containers/buttons';
 import Answer from './containers/answer';
 import Choices from './containers/choices';
 
-
+// having difficulties with howler js, decoding the file, used audio tag instead, see HTML
+// autoplay upon loading, but i think DOM manipulation can help
+const bgMusic = new Howl({
+  src: ['../../public/audio/startTrue.webm'],
+  autoplay: true,
+  loop: true,
+  volume: 0.5,
+});
 
 // for my future me, future additions
 // 2. point system
@@ -99,6 +107,7 @@ class GuessTheCountry extends Component {
     const [ answerName, answerImg ] = answer
     const flagImg = Flag( answerImg )
     const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
+    if(start) { bgMusic.play() }
 
     if ( gameOver === false ) {
       if ( lives !== 0  ) {
