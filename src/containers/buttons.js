@@ -23,6 +23,13 @@ class ButtonsContainer extends Component {
             start={start}
           />
 
+          <Quit
+            start={start}
+            answered={answered}
+            passed={passed}
+            endGame={endGame}
+          />
+
           <Pass
             revealAnswer={revealAnswer}
             start={start}
@@ -41,12 +48,6 @@ class ButtonsContainer extends Component {
             start={start}
             passed={passed}
             answered={answered}
-          />
-
-          <Quit
-            start={start}
-            answered={answered}
-            endGame={endGame}
           />
 
         </div>

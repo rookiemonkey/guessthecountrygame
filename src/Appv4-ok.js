@@ -9,7 +9,7 @@ import Heart from './components/heart';
 // methods
 import start from './methods/start';
 import reveal from './methods/revealAnswer';
-import pass from './methods/pass';
+import proceed from './methods/pass';
 import evaluate from './methods/evaluate';
 
 // containers
@@ -21,22 +21,17 @@ import Choices from './containers/choices';
 
 
 // for my future me, future additions
-// 1. DONE  === 10 lives
-    // DONE === when reaches 0, game over screen
 // 2. point system
 //        - specific will give specific class (such as Diplomat for 50 - 60 points)
 //        - display message that "we hope user did not googled the answers"
-// 3. DONE  === save correct answers // array of obj (name/img)
-// 4. DONE  === save incorrect answers // array of obj (name/img)
 // 5. DONE === quit button
-// 6. quit button ends the game and shows GAMEOVER and the correct/incorrect answers
+// 6. needs styling - quit button ends the game and shows GAMEOVER and the correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
-// 8. DONE === avoid duplicate by stroting just the answer.countryname (regardless if right/wrong) to avoidDup array
-    // DONE === modify setChoices to loop into avoidDupArray
 // 9. incorrectAnswer might give you duplicate countries as well, use map instead
 // 9. timer for each question
     // -- score will be depending on the duration
     // -- when time reaches 0 its already incorrect (call pass instead)
+// 10. display other information beign fetched from the server
 
 class GuessTheCountry extends Component {
   constructor(props) {
@@ -78,7 +73,7 @@ class GuessTheCountry extends Component {
 
   // PASS: PROCEED TO NEXT QUESTION
   nextQuestion = () => {
-    pass(this)
+    proceed(this)
   }
 
   // SET CHOSEN ANSWER
@@ -100,7 +95,8 @@ class GuessTheCountry extends Component {
     const {
       countries, choices, start,
       gameOver, answer, passed,
-      answered, correct, lives, score } = this.state;
+      answered, correct, lives, score,
+      incorrectAnswer, correctAnswer } = this.state;
     const [ answerName, answerImg ] = answer
     const flagImg = Flag( answerImg )
     const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
@@ -147,14 +143,26 @@ class GuessTheCountry extends Component {
       } else {
 
         // when score reaches 0
-        return (<GameOver />)
+        return (
+          <GameOver
+            message="You have no lives left"
+            incorrectAnswer={incorrectAnswer}
+            correctAnswer={correctAnswer}
+          />
+        )
 
       }
 
     } else {
 
       // when user quits
-      return (<GameOver />)
+      return (
+        <GameOver
+          message="Give yourself a chance"
+          incorrectAnswer={incorrectAnswer}
+          correctAnswer={correctAnswer}
+        />
+      )
 
     }
   }

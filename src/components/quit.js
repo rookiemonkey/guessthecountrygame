@@ -4,9 +4,9 @@ class Quit extends Component {
 
     render() {
 
-        const { start, endGame, answered } = this.props;
+        const { start, endGame, answered, passed } = this.props;
 
-        if(start && answered) {
+        if(start && answered || start && passed) {
 
             return (
 
