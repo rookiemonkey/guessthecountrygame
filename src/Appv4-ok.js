@@ -24,7 +24,6 @@ import Choices from './containers/choices';
 // 2. point system
 //        - specific will give specific class (such as Diplomat for 50 - 60 points)
 //        - display message that "we hope user did not googled the answers"
-// 6. needs styling - quit button ends the game and shows GAMEOVER and the correct/incorrect answers
 // 7. use howler.js to add music upon hitting start
 // 9. timer for each question
     // -- score will be depending on the duration
@@ -158,7 +157,7 @@ class GuessTheCountry extends Component {
       // when user quits
       return (
         <GameOver
-          message="Give yourself a chance"
+          message=" "
           incorrectAnswer={incorrectAnswer}
           correctAnswer={correctAnswer}
         />

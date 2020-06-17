@@ -10,13 +10,17 @@ class Status extends Component {
 
             <>
 
+                <div id="statusContainer">
+
                 {( start )
-                    ? <h6>Score: { score }</h6>
+                    ? <span>Score: { score }</span>
                     : null }
 
                 {( start )
-                    ? <h6>Lives: { hearts } </h6>
+                    ? <span>Lives: { hearts } </span>
                     : null }
+
+                </div>
 
                 {( lives === 1 )
                     ? <h6><strong>This is your last chance, if you got it incorrectly, Game is over</strong></h6>

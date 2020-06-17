@@ -10,19 +10,19 @@ class CountryCard extends Component {
             output = this.props.incorrect.map((c, i) => {
                 return (
 
-                    <React.Fragment key={i} >
-                         <img
-                            className="card-img-top"
-                            src={c.Flag}
-                            alt={c.Country}
-                            style={{width: "18rem", height: "auto"}}
-                        />
+                    <div className="card" id="country-card" key={i}>
                         <div className="card-body">
-                            <p className="card-text">
+                            <p className="card-text" style={{textAlign: 'center'}}>
                                 {c.Country}
                             </p>
                         </div>
-                    </React.Fragment>
+                        <img
+                            className="card-img-top"
+                            src={c.Flag}
+                            alt={c.Country}
+                            style={{width: "18rem", height: "9rem"}}
+                        />
+                    </div>
 
                 )
             })
@@ -31,29 +31,28 @@ class CountryCard extends Component {
             output = this.props.correct.map((c, i) => {
                 return (
 
-                    <React.Fragment key={i} >
+                    <div className="card" id="country-card" key={i}>
+                        <div className="card-body">
+                            <p className="card-text" style={{textAlign: 'center'}}>
+                                {c.Country}
+                            </p>
+                        </div>
                         <img
                             className="card-img-top"
                             src={c.Flag}
                             alt={c.Country}
-                            style={{width: "18rem", height: "auto"}}
+                            style={{width: "18rem", height: "9rem"}}
                         />
-                        <div className="card-body">
-                            <p className="card-text">
-                                {c.Country}
-                            </p>
-                        </div>
-                    </React.Fragment>
+                    </div>
 
                 )
             })
 
         }
 
-
         return (
 
-            <div className="card" style={{width: "18rem"}}>
+            <div id="country-card-container" >
 
                 {output}
 

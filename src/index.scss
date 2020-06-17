@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 $font: 'Montserrat', sans-serif;
+$title-background-color: #5B6157;
+$status-background-color: #5B6157;
+$review-header-bg-color: #2f2f2f;
+$review-container-bg-color: #A36A59;
+$correct-header-bg-color: #2f2f2f;
+$correct-container-bg-color: #2E572C;
 
 * {
   margin: 0px;
@@ -19,10 +25,93 @@ div.gameContainer {
   flex-direction: column;
   width: 100%;
   height: 100vh;
+
+  button {
+    height: 36px;
+    margin: 10px;
+    background-color: transparent;
+    border: 1px solid whitesmoke;
+    box-shadow: none;
+
+    &.waves-effect {
+      overflow: visible !important;
+    }
+
+  }
+
+  h5 {
+    text-align: center
+  }
+
+  div#country-card-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    div#country-card{
+      width: 18rem;
+      height: 245px;
+      background-color: transparent;
+      box-shadow: none;
+      margin: 10px;
+    }
+  }
+
+  div#statusContainer {
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $status-background-color;
+
+    span {
+      margin: 0px 2%;
+    }
+  }
+
+  div#resultsContainer {
+    width: 90%;
+    margin: 0px auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+
+  div#incorrectCountryContainer {
+    width: 90%;
+    margin: 30px 0px;
+    background-color: $review-container-bg-color;
+
+    h5 {
+      padding: 5px;
+      background-color: $review-header-bg-color;
+      border: 5px solid $review-container-bg-color;
+    }
+  }
+
+  div#correctCountryContainer {
+    width: 90%;
+    margin: 30px 0px;
+    background-color: $correct-container-bg-color;
+
+    h5 {
+      padding: 5px;
+      background-color: $correct-header-bg-color;
+      border: 5px solid $correct-container-bg-color;
+    }
+  }
+
 }
 
 header.gameTitleContainer {
-  margin: 5px;
+  width: 100%;
+  background-color: $title-background-color;
+
+  h4 {
+    margin: 1.5rem;
+    text-align: center;
+  }
 }
 
 div.gameNavigation {
@@ -33,11 +122,16 @@ div.gameNavigation {
   padding: 10px;
 
   // global buttons
-  button.btn {
+  button {
+    overflow: none;
     margin: 10px;
     background-color: transparent;
     border: 1px solid whitesmoke;
     box-shadow: none;
+
+    &.waves-effect {
+      overflow: visible !important;
+    }
   }
 
   //messages
@@ -92,8 +186,6 @@ div.gameNavigation {
       position: static;
     }
   }
-
-
 
 }
 

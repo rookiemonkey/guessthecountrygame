@@ -7,8 +7,7 @@ class GameOver extends Component {
     render() {
 
         const  { message, incorrectAnswer, correctAnswer: correct } = this.props;
-        const incorrect = [...new Set(incorrectAnswer)];
-
+        const incorrect = [...new Set(incorrectAnswer)]
 
         return (
 
@@ -16,20 +15,29 @@ class GameOver extends Component {
 
             <Title />
 
-                <h3> G A M E - O V E R </h3>
+                <h4> G A M E - O V E R </h4>
+                <button
+                    className="btn waves-effect waves-light"
+                    onClick={()=>{window.location.reload()}}
+                >Play Again</button>
                 <h6> {message} </h6>
 
-                <div>
+                <div id="resultsContainer">
 
-                    <div>
+                    <div id="incorrectCountryContainer">
                         <h5>  You need to review the following countries: </h5>
                         <CountryCard incorrect={incorrect} />
                     </div>
 
-                    <div>
-                        <h5>  Here are your correct answers: </h5>
-                        <CountryCard correct={correct} />
-                    </div>
+                    {
+                        (correct.length)
+                        ? ( <div id="correctCountryContainer">
+                                <h5>  Here are your correct answers: </h5>
+                                <CountryCard correct={correct} />
+                            </div>)
+                        : null
+                    }
+
 
                 </div>
 
