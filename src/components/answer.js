@@ -1,12 +1,12 @@
 import React from 'react'
 
-const revealAnswer = ({answerName, passed, answered, correct}) => {
+const revealAnswer = ({ passed, answered, correct}) => {
 
     if (passed) {
 
         return (
 
-            <span>the answer is <strong>{answerName}</strong></span>
+            <span>the answer is ... </span>
 
         )
 
@@ -14,7 +14,7 @@ const revealAnswer = ({answerName, passed, answered, correct}) => {
 
         return (
 
-            <span className="correct">You got it right! its <strong>{answerName}</strong></span>
+            <span className="correct">You got it right! it's ... </span>
 
         )
 
@@ -22,7 +22,7 @@ const revealAnswer = ({answerName, passed, answered, correct}) => {
 
         return (
 
-            <span>You are almost there. The correct answer is <strong>{answerName}</strong></span>
+            <span>You are almost there. The correct answer is ... </span>
 
         )
 

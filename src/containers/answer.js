@@ -7,8 +7,8 @@ class AnswerContainer extends Component {
 
     render () {
 
-        const { answerName, passed, answered, correct, start, countries, answer } = this.props;
-        const revealTheAnswer = RevealAnswer({ answerName, passed, answered, correct });
+        const { passed, answered, correct, start, countries, answer } = this.props;
+        const revealTheAnswer = RevealAnswer({ passed, answered, correct });
         const loadMsg = Loading({ countries, start, passed, correct, answered });
 
         return (

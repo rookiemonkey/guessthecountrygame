@@ -12,6 +12,7 @@ import start from './methods/start';
 import reveal from './methods/revealAnswer';
 import proceed from './methods/pass';
 import evaluate from './methods/evaluate';
+import music from './methods/bgmusic';
 
 // containers
 import Status from './containers/stats';
@@ -27,18 +28,6 @@ const bgMusic = new Howl({
   loop: true,
   volume: 0.5,
 });
-
-// for my future me, future additions
-// 2. point system
-//        - specific will give specific class (such as Diplomat for 50 - 60 points)
-//        - display message that "we hope user did not googled the answers"
-// 7. use howler.js to add music upon hitting start
-// 9. timer for each question
-    // -- score will be depending on the duration
-    // -- when time reaches 0 its already incorrect (call pass instead)
-// 10. upon showing the answer
-    // -- needs styling display other informations fetched from the server
-    // -- display it on a map (use a library)
 
 class GuessTheCountry extends Component {
   constructor(props) {
@@ -70,7 +59,8 @@ class GuessTheCountry extends Component {
 
   // STARTS THE GAME
   setChoices = () => {
-    start(this)
+    start(this);
+    music();
   }
 
   // PASS: REVEAL ANSWER
@@ -107,7 +97,6 @@ class GuessTheCountry extends Component {
     const [ answerName, answerImg ] = answer
     const flagImg = Flag( answerImg )
     const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
-    if(start) { bgMusic.play() }
 
     if ( gameOver === false ) {
       if ( lives !== 0  ) {
