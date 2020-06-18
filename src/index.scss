@@ -169,6 +169,16 @@ div.gameNavigation {
     span.correct {
       color: yellowgreen;
     }
+
+    div#mapid {
+      position: relative;
+      width: 100vw;
+      background-color: pink;
+
+      div.leaflet-container {
+        position: static !important;
+      }
+    }
   }
 
   //  choices cointainer
