@@ -5,5 +5,3 @@ for my future me, future additions
 = timer for each question
         - score will be depending on the duration
         - when time reaches 0 its already incorrect (call pass instead)
-= upon showing the answer
-        - display it on a map (use a library)

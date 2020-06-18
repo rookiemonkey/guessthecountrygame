@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Howl } from 'howler';
 
 // components
 import Title from './components/title';
@@ -19,15 +18,6 @@ import Status from './containers/stats';
 import Buttons from './containers/buttons';
 import Answer from './containers/answer';
 import Choices from './containers/choices';
-
-// having difficulties with howler js, decoding the file, used audio tag instead, see HTML
-// autoplay upon loading, but i think DOM manipulation can help
-const bgMusic = new Howl({
-  src: ['../../public/audio/startTrue.webm'],
-  autoplay: true,
-  loop: true,
-  volume: 0.5,
-});
 
 class GuessTheCountry extends Component {
   constructor(props) {

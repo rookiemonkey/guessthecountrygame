@@ -16,16 +16,17 @@ class Trivia extends Component {
 
                 <h5> { name } </h5>
 
-                <div id="mapid" style={{height: "180px", width: '100%'}}>
-                    <CountryMap lat={lat} lng={lng} name={name} />
-                </div>
+                <div id="mapid" >
+                    <CountryMap
+                        lat={lat} lng={lng}
+                        name={name}
+                        capital={capital}
+                        region={region}
+                        subregion={subregion}
+                        population={population}
 
-                <ul>
-                    <li>Capital: {capital} </li>
-                    <li>Region: {region} </li>
-                    <li>Subregion: {subregion} </li>
-                    <li>Population: {pop} </li>
-                </ul>
+                    />
+                </div>
 
            </React.Fragment>
 

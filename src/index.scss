@@ -172,11 +172,57 @@ div.gameNavigation {
 
     div#mapid {
       position: relative;
-      width: 100vw;
-      background-color: pink;
+      height: 250px;
+      width: 100%;
+      margin-bottom: 10%;
 
       div.leaflet-container {
         position: static !important;
+
+        div.leaflet-pane.leaflet-map-pane {
+          position: relative !important;
+          padding: 125px;
+          // padding fixes the issue with map not rendring w/in the div#mapid
+          // 125px per side half of the div#mapid height
+
+          div.leaflet-pane.leaflet-tile-pane {
+            position: relative !important;
+
+            div.leaflet-layer {
+              position: relative !important;
+
+              div.leaflet-tile-container {
+                position: relative !important;
+
+                img.leaflet-tile.leaflet-tile-loaded {
+
+                }
+              }
+            }
+          }
+        }
+      }
+
+      div.leaflet-popup-content-wrapper {
+
+        div.leaflet-popup-content {
+          line-height: 1px;
+
+          .popup-heading {
+            font-family: $font;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+          }
+
+          .popup-details {
+            font-family: $font;
+            strong {
+              font-weight: 600;
+            }
+          }
+        }
       }
     }
   }
