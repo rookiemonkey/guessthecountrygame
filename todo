@@ -1,7 +1,0 @@
-for my future me, future additions
-= point system
-        - specific will give specific class (such as Diplomat for 50 - 60 points)
-        - display message that "we hope user did not googled the answers"
-= timer for each question
-        - score will be depending on the duration
-        - when time reaches 0 its already incorrect (call pass instead)
