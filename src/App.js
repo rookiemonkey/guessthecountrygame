@@ -7,11 +7,11 @@ import Flag from './components/flag';
 import Heart from './components/heart';
 
 // methods
-import start from './methods/start';
-import reveal from './methods/revealAnswer';
-import proceed from './methods/pass';
-import evaluate from './methods/evaluate';
-import music from './methods/bgmusic';
+import setGame from './helpers/setGame';
+import revealAnswer from './helpers/revealAnswer';
+import nextQuestion from './helpers/nextQuestion';
+import checkAnswer from './helpers/checkAnswer';
+import setBackgroundMusic from './helpers/setBackgroundMusic';
 
 // containers
 import Status from './containers/stats';
@@ -43,39 +43,39 @@ class GuessTheCountry extends Component {
   // API CALL
   componentDidMount() {
     fetch("https://restcountries.eu/rest/v2/all")
-    .then(data => {return data.json()})
-    .then(data => {this.setState({countries: data})})
+      .then(data => { return data.json() })
+      .then(data => { this.setState({ countries: data }) })
   }
 
   // STARTS THE GAME
   setChoices = () => {
-    start(this);
-    music();
+    setGame(this);
+    setBackgroundMusic();
   }
 
   // PASS: REVEAL ANSWER
   revealAnswer = () => {
-    reveal(this)
+    revealAnswer(this)
   }
 
   // PASS: PROCEED TO NEXT QUESTION
   nextQuestion = () => {
-    proceed(this)
+    nextQuestion(this)
   }
 
   // SET CHOSEN ANSWER
   chosenAnswer = e => {
-    this.setState({userAnswer: e.target.value})
+    this.setState({ userAnswer: e.target.value })
   }
 
   // EVALUATE ANSWER
   checkAnswer = () => {
-    evaluate(this)
+    checkAnswer(this)
   }
 
   // QUIT
   endGame = () => {
-    this.setState({gameOver: true})
+    this.setState({ gameOver: true })
   }
 
   render() {
@@ -84,49 +84,51 @@ class GuessTheCountry extends Component {
       gameOver, answer, passed,
       answered, correct, lives, score,
       incorrectAnswer, correctAnswer } = this.state;
-    const [ answerName, answerImg ] = answer
-    const flagImg = Flag( answerImg )
-    const hearts = Array(lives).fill().map((heart, i) => (<Heart key={i}/>))
+    const [answerName, answerImg] = answer
+    const flagImg = Flag(answerImg)
+    const hearts = Array(lives)
+      .fill()
+      .map((heart, i) => (<Heart key={i} />))
 
-    if ( gameOver === false ) {
-      if ( lives !== 0  ) {
-      return (
+    if (gameOver === false) {
+      if (lives !== 0) {
+        return (
 
-      <div className="gameContainer">
+          <div className="gameContainer">
 
-        <Title />
+            <Title />
 
-        <Status start={start} score={score} hearts={hearts} lives={lives} />
+            <Status start={start} score={score} hearts={hearts} lives={lives} />
 
-        <div className="gameNavigation">
+            <div className="gameNavigation">
 
-          {( start ) ? flagImg : null }
+              {(start) ? flagImg : null}
 
-          <Buttons
-            start={start} passed={passed}
-            answered={answered} setChoices={this.setChoices}
-            revealAnswer={this.revealAnswer} nextQuestion={this.nextQuestion}
-            checkAnswer={this.checkAnswer} endGame={this.endGame}
-          />
+              <Buttons
+                start={start} passed={passed}
+                answered={answered} setChoices={this.setChoices}
+                revealAnswer={this.revealAnswer} nextQuestion={this.nextQuestion}
+                checkAnswer={this.checkAnswer} endGame={this.endGame}
+              />
 
-          <Answer
-            answerName={answerName} passed={passed}
-            answered={answered} correct={correct}
-            start={start} countries={countries}
-            answer={answer}
-          />
+              <Answer
+                answerName={answerName} passed={passed}
+                answered={answered} correct={correct}
+                start={start} countries={countries}
+                answer={answer}
+              />
 
-          <Choices
-            choices={choices} start={start}
-            answered={answered} passed={passed}
-            chosenAnswer={this.chosenAnswer}
-          />
+              <Choices
+                choices={choices} start={start}
+                answered={answered} passed={passed}
+                chosenAnswer={this.chosenAnswer}
+              />
 
-        </div>
+            </div>
 
-      </div>
+          </div>
 
-      )
+        )
 
       } else {
 

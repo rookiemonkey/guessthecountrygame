@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GuessTheCountryApp from './Appv4-ok';
+import GuessTheCountryApp from './App';
 import './index.scss';
 
 ReactDOM.render(
