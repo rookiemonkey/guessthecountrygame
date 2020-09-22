@@ -102,7 +102,11 @@ class GuessTheCountry extends Component {
 
             <div className="gameNavigation">
 
-              {(start && !answered) ? flagImg : null}
+              {
+                start && !answered
+                  ? passed ? null : flagImg
+                  : null
+              }
 
               <Buttons
                 start={start} passed={passed}
