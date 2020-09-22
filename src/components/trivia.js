@@ -22,7 +22,7 @@ class Trivia extends Component {
                         region={region}
                         subregion={subregion}
                         population={population}
-
+                        flag={flag}
                     />
                 </div>
 
