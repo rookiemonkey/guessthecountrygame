@@ -118,6 +118,8 @@ div.gameNavigation {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
+  align-items: center;
+  max-height: 100%;
   width: 750px;
   padding: 10px;
 
@@ -157,6 +159,7 @@ div.gameNavigation {
 
   // answer container
   div.gameAnswerContainer {
+    margin-top: 10px;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -246,5 +249,25 @@ div.gameNavigation {
 
 }
 
+#mapid {
+  width: 200%;
+    position: absolute !important;
+}
 
 
+.leaflet-container {
+  margin-top: 75px;
+  position: absolute !important;
+  width: 100%;
+  height: 100vh ;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+  margin-top: 85px; // 75 + 10
+}
+
+.leaflet-control-attribution.leaflet-control {
+  position: relative;
+  // top: 100vh;
+  bottom: 158px;
+}

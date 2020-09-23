@@ -6,8 +6,8 @@ const flag = (answerImg) => {
             <img
                 src={answerImg}
                 alt="Country Flag"
-                width="400px"
-                height="auto"
+                width="350px"
+                height="233px"
             />
         </div>
     )
